@@ -1,0 +1,75 @@
+erDiagram
+  USER ||--o{ MAGAZINE : publishes
+  USER ||--o{ SUBSCRIPTION : subscribes
+  USER ||--o{ COMMENT : writes
+  USER ||--o{ ACTIVITYLOG : acts
+  USER ||--o{ REFRESHTOKEN : has
+  MAGAZINE ||--o{ SUBSCRIPTION : has
+  MAGAZINE ||--o{ COMMENT : has
+
+  USER {
+    string id PK
+    string email UK
+    string password
+    string name
+    enum role "ADMIN, PUBLISHER, SUBSCRIBER"
+    boolean emailVerified
+    string emailVerificationToken
+    string passwordResetToken
+    datetime passwordResetExpires
+    datetime createdAt
+    datetime updatedAt
+  }
+  
+  MAGAZINE {
+    string id PK
+    string title
+    string description
+    string publisherId FK
+    datetime createdAt
+    datetime updatedAt
+  }
+  
+  SUBSCRIPTION {
+    string id PK
+    string userId FK
+    string magazineId FK
+    enum status "PENDING, ACTIVE, EXPIRED, CANCELLED"
+    datetime startDate
+    datetime endDate
+    datetime createdAt
+    datetime updatedAt
+  }
+  
+  COMMENT {
+    string id PK
+    string content
+    string authorId FK
+    string magazineId FK
+    boolean approved
+    datetime createdAt
+    datetime updatedAt
+  }
+  
+  ACTIVITYLOG {
+    string id PK
+    string actorId FK
+    string action
+    json meta
+    datetime createdAt
+  }
+  
+  REFRESHTOKEN {
+    string id PK
+    string token UK
+    string userId FK
+    datetime expiresAt
+    datetime createdAt
+  }
+  
+  BLACKLISTEDTOKEN {
+    string id PK
+    string token UK
+    datetime createdAt
+  }
+
