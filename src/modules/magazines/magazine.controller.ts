@@ -69,6 +69,8 @@ export class MagazineController {
       
       ResponseWrapper.success(reply, magazine, 'Magazine updated successfully');
     } catch (error) {
+
+      
       ResponseWrapper.badRequest(reply, error instanceof Error ? error.message : 'Failed to update magazine');
     }
   };
